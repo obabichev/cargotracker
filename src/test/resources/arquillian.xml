@@ -10,6 +10,9 @@
     <configuration>
       <property name="randomHttpPort">false</property>
       <property name="autoBindHttp">false</property>
+      <!-- Force IPv4 so Payara Micro doesn't bind a macOS IPv6 link-local address
+           (e.g. fe80::...%ap1), which Arquillian can't turn into a valid test URL. -->
+      <property name="cmdOptions">-Djava.net.preferIPv4Stack=true</property>
       <property name="extraMicroOptions">--port 9090 --contextroot cargo-tracker-test</property>
     </configuration>
   </container>
