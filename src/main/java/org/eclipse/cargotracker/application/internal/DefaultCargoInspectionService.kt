@@ -13,36 +13,36 @@ import java.util.logging.Logger
 @Stateless
 class DefaultCargoInspectionService : CargoInspectionService {
     @Inject
-    private val logger: Logger? = null
+    private lateinit var logger: Logger
 
     @Inject
-    private val applicationEvents: ApplicationEvents? = null
+    private lateinit var applicationEvents: ApplicationEvents
 
     @Inject
-    private val cargoRepository: CargoRepository? = null
+    private lateinit var cargoRepository: CargoRepository
 
     @Inject
-    private val handlingEventRepository: HandlingEventRepository? = null
+    private lateinit var handlingEventRepository: HandlingEventRepository
 
     override fun inspectCargo(trackingId: TrackingId?) {
-        val cargo = cargoRepository!!.find(trackingId)
+        val cargo = cargoRepository.find(trackingId)
 
         if (cargo == null) {
-            logger!!.log(Level.WARNING, "Can't inspect non-existing cargo {0}", trackingId)
+            logger.log(Level.WARNING, "Can't inspect non-existing cargo {0}", trackingId)
             return
         }
 
         val handlingHistory =
-            handlingEventRepository!!.lookupHandlingHistoryOfCargo(trackingId)
+            handlingEventRepository.lookupHandlingHistoryOfCargo(trackingId)
 
         cargo.deriveDeliveryProgress(handlingHistory)
 
         if (cargo.getDelivery().isMisdirected()) {
-            applicationEvents!!.cargoWasMisdirected(cargo)
+            applicationEvents.cargoWasMisdirected(cargo)
         }
 
         if (cargo.getDelivery().isUnloadedAtDestination()) {
-            applicationEvents!!.cargoHasArrived(cargo)
+            applicationEvents.cargoHasArrived(cargo)
         }
 
         cargoRepository.store(cargo)
