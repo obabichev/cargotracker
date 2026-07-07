@@ -126,6 +126,26 @@
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Jersey Test Framework — used by CargoSearchResourceJerseyTest to reproduce
+         JAX-RS parameter-resolution behavior in a unit test (see KTIJ ticket). -->
+    <dependency>
+      <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+      <artifactId>jersey-test-framework-provider-inmemory</artifactId>
+      <version>3.1.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>3.1.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-binding</artifactId>
+      <version>3.1.10</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>cargo-tracker</finalName>
