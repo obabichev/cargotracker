@@ -126,6 +126,14 @@
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Weld SE — used by WeldFinalClassProxyabilityTest to reproduce WELD-001435
+         on a Kotlin normal-scoped CDI bean whose class is final (see KTIJ ticket). -->
+    <dependency>
+      <groupId>org.jboss.weld.se</groupId>
+      <artifactId>weld-se-core</artifactId>
+      <version>5.1.5.Final</version>
+      <scope>test</scope>
+    </dependency>
     <!-- Jersey Test Framework — used by CargoSearchResourceJerseyTest to reproduce
          JAX-RS parameter-resolution behavior in a unit test (see KTIJ ticket). -->
     <dependency>
