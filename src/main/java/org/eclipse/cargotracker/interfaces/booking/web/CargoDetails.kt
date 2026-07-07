@@ -1,43 +1,33 @@
-package org.eclipse.cargotracker.interfaces.booking.web;
+package org.eclipse.cargotracker.interfaces.booking.web
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import org.eclipse.cargotracker.interfaces.booking.facade.BookingServiceFacade;
-import org.eclipse.cargotracker.interfaces.booking.facade.dto.CargoRoute;
+import jakarta.enterprise.context.RequestScoped
+import jakarta.inject.Inject
+import jakarta.inject.Named
+import org.eclipse.cargotracker.interfaces.booking.facade.BookingServiceFacade
+import org.eclipse.cargotracker.interfaces.booking.facade.dto.CargoRoute
 
 /**
  * Handles viewing cargo details. Operates against a dedicated service facade, and could easily be
  * rewritten as a thick Swing client. Completely separated from the domain layer, unlike the
  * tracking user interface.
- *
- * <p>In order to successfully keep the domain model shielded from user interface considerations,
+ * 
+ * 
+ * In order to successfully keep the domain model shielded from user interface considerations,
  * this approach is generally preferred to the one taken in the tracking controller. However, there
  * is never any one perfect solution for all situations, so we've chosen to demonstrate two
  * polarized ways to build user interfaces.
  */
 @Named
 @RequestScoped
-public class CargoDetails {
+class CargoDetails {
+    @Inject
+    private lateinit var bookingServiceFacade: BookingServiceFacade
 
-  @Inject private BookingServiceFacade bookingServiceFacade;
+    var trackingId: String? = null
+    var cargo: CargoRoute? = null
+        private set
 
-  private String trackingId;
-  private CargoRoute cargo;
-
-  public String getTrackingId() {
-    return trackingId;
-  }
-
-  public void setTrackingId(String trackingId) {
-    this.trackingId = trackingId;
-  }
-
-  public CargoRoute getCargo() {
-    return cargo;
-  }
-
-  public void load() {
-    cargo = bookingServiceFacade.loadCargoForRouting(trackingId);
-  }
+    fun load() {
+        cargo = bookingServiceFacade!!.loadCargoForRouting(trackingId)
+    }
 }
