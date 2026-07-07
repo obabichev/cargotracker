@@ -37,7 +37,7 @@ import java.time.temporal.ChronoUnit
     name = "HandlingEvent.findByTrackingId",
     query = "Select e from HandlingEvent e where e.cargo.trackingId = :trackingId"
 )
-class HandlingEvent : Serializable {
+open class HandlingEvent : Serializable {
     @Id
     @GeneratedValue
     private val id: Long? = null
@@ -71,7 +71,7 @@ class HandlingEvent : Serializable {
     @NotNull
     private var cargo: @NotNull Cargo? = null
 
-    @Transient
+    @get:Transient
     val summary: String?
         get() {
             val builder =
